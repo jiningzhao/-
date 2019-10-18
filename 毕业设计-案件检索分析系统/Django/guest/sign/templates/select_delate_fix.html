@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+
+
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+		<link rel="stylesheet" href="../static/css1/demo.css">
+		<link rel="stylesheet" href="../static/css1/sky-forms.css">
+    <link rel="stylesheet" href="../static/css2/bootstrap.min.css" />
+		<!--[if lt IE 9]>
+			<link rel="stylesheet" href="css/sky-forms-ie8.css">
+			<link rel="stylesheet" type="text/css" href="../static/css/demo.css" />
+        <!--必要样式-->
+        <link rel="stylesheet" type="text/css" href="../static/css/component.css" />
+		<![endif]-->
+		<script src="../static/js1/jquery-1.9.1.min.js"></script>
+		<script src="../static/js1/jquery.validate.min.js"></script>
+		<!--[if lt IE 10]>
+			<script src="js/jquery.placeholder.min.js"></script>
+		<![endif]-->
+		<!--[if lt IE 9]>
+			<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+			<script src="js/sky-forms-ie8.js"></script>
+		<![endif]-->
+    <meta charset="UTF-8">
+    <title>案件查询</title>
+</head>
+
+<body class="bg-cyan">
+<div class="modal fade" id="myModal" tabindex="-1" >
+			<div class="modal-dialog modal-lg">
+				<div class="modal-content" style="width: 300px;margin: auto">
+					<div class="modal-header">
+						<button class="close" data-dismiss="modal"><span>&times;</span></button>
+						<h4 class="modal-title">删除案件</h4>
+					</div>
+					<div class="modal-body">
+                        删除之后无法找回，是否立即删除？
+					</div>
+					<div class="modal-footer">
+                        <a href="#"><button class="btn btn-primary" id="comeback">取消</button></a>
+                        <a id="delate_no"><button class="btn btn-danger" id="delate">删除</button></a>
+					</div>
+				</div>
+			</div>
+		</div>
+
+<div class="container" style="margin: 0 0 0 70px">
+    <nav class="cl-effect-10">
+        <a href="/Insert/" data-hover="录入"><span>录入</span></a>
+        <a href="/select_delate_fix/" data-hover="查询"><span>查询</span></a>
+        <a href="/pie/" data-hover="占比分析"><span>占比分析</span></a>
+        <a href="/line/" data-hover="案件趋势分析"><span>案件趋势分析</span></a>
+        <a href="/histogram/" data-hover="各季节侦破数量分析"><span>各季节侦破数量分析</span></a>
+        <a href="/china/" data-hover="地区差异性分析"><span>地区差异性分析</span></a>
+    </nav>
+		<div  style="margin:0;padding: 0 20px 20px 0;">
+        <p>{{ p }}</p>
+            <form action="/select_delate_fix/" method="post" style="margin:0 0 0 850px;padding: 20px 0 20px 20px;width: 250px;background-color: black;border-radius:5px">
+            {#    <input type="radio" name="type" value="area">按照地点查询#}
+            {#    <input type="radio" name="type" value="no">按照编号查询#}
+            {#    <input type="radio" name="type" value="name">按照案件名称查询#}
+
+                <input type="text" name="select" placeholder="请输入想查询的信息（准确）">
+                <button type="submit">搜索</button>
+                {% csrf_token %}
+            </form>
+
+<table border="1" width="1100" data-file-height="200" cellspacing="0" style="margin-top: 0">
+    <tr bgcolor="black" style="color: white;text-align: center">
+        <td>案件编号</td>
+        <td>主要人员</td>
+        <td>案件类型</td>
+        <td>案件名称</td>
+        <td>发生地点（省）</td>
+        <td>发生地点（市）</td>
+        <td>季节</td>
+        <td>发生时间（市）</td>
+        <td>是否侦破</td>
+        <td>数据操作</td>
+    </tr>
+    {% for i in data %}
+    <tr>
+        <td>{{ i.no }}</td>
+        <td><a href="/details/?name={{ i.name }}">{{ i.name }}</a></td>
+        <td>{{ i.type_key }}</td>
+        <td>{{ i.type_value }}</td>
+        <td>{{ i.area_key }}</td>
+        <td>{{ i.area_value }}</td>
+        <td>{{ i.season }}</td>
+        <td>{{ i.date }}</td>
+        <td>{{ i.make }}</td>
+        <td style="text-align: center"><a href="/fix/?no={{ i.no }}">修改</a> /<a href="#" class="btn1" name="{{ i.no }}">删除</a></td>
+    </tr>
+    {% endfor %}
+</table>
+        </div><!-- /container -->
+		</div>
+        <script src="../static/js2/jquery.min.js"></script>
+		<script src="../static/js2/bootstrap.min.js"></script>
+        <script src="../static/layer/layer.js"></script>
+		<script type="text/javascript">
+            $(function () {
+                $("#myModal").modal({
+				show:false,
+				backdrop:false,
+				keyboard:false
+//				remote:"导航条组件.html",
+                });
+                $(".btn1").on('click',function(){
+                    $("#myModal").modal('show');
+                    $("#delate_no").attr("href","/delate/?no="+$(this).attr("name")); //点击删除，弹窗中的删除按钮href值被改变
+                });
+                $("#comeback").on('click',function(){
+                    $("#myModal").modal('hide');
+                });
+                $("#delate").on('click',function(){
+                    $("#myModal").modal('hide');
+                    layer.msg("删除成功！",function () {
+                        //弹出层页面
+                    });
+                });
+            });
+
+			$(function()
+			{
+				// Validation
+				$("#sky-form").validate(
+				{
+					// Rules for form validation
+					rules:
+					{
+						username:
+						{
+							required: true
+						},
+						email:
+						{
+							required: true,
+							email: true
+						},
+						password:
+						{
+							required: true,
+							minlength: 3,
+							maxlength: 20
+						},
+						passwordConfirm:
+						{
+							required: true,
+							minlength: 3,
+							maxlength: 20,
+							equalTo: '#password'
+						},
+						firstname:
+						{
+							required: true
+						},
+						lastname:
+						{
+							required: true
+						},
+						gender:
+						{
+							required: true
+						},
+						terms:
+						{
+							required: true
+						}
+					},
+
+					// Messages for form validation
+					messages:
+					{
+						login:
+						{
+							required: 'Please enter your login'
+						},
+						email:
+						{
+							required: 'Please enter your email address',
+							email: 'Please enter a VALID email address'
+						},
+						password:
+						{
+							required: 'Please enter your password'
+						},
+						passwordConfirm:
+						{
+							required: 'Please enter your password one more time',
+							equalTo: 'Please enter the same password as above'
+						},
+						firstname:
+						{
+							required: 'Please select your first name'
+						},
+						lastname:
+						{
+							required: 'Please select your last name'
+						},
+						gender:
+						{
+							required: 'Please select your gender'
+						},
+						terms:
+						{
+							required: 'You must agree with Terms and Conditions'
+						}
+					},
+
+					// Do not change code below
+					errorPlacement: function(error, element)
+					{
+						error.insertAfter(element.parent());
+					}
+				});
+			});
+		</script>
+</body>
+</html>

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html style="height: 100%">
+   <head>
+       <title>折线图</title>
+       <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+		<link rel="stylesheet" href="../static/css1/demo.css">
+		<link rel="stylesheet" href="../static/css1/sky-forms.css">
+		<!--[if lt IE 9]>
+			<link rel="stylesheet" href="css/sky-forms-ie8.css">
+			<link rel="stylesheet" type="text/css" href="../static/css/demo.css" />
+<!--必要样式-->
+<link rel="stylesheet" type="text/css" href="../static/css/component.css" />
+		<![endif]-->
+		<script src="../static/js1/jquery-1.9.1.min.js"></script>
+		<script src="../static/js1/jquery.validate.min.js"></script>
+		<!--[if lt IE 10]>
+			<script src="js/jquery.placeholder.min.js"></script>
+		<![endif]-->
+		<!--[if lt IE 9]>
+			<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+			<script src="js/sky-forms-ie8.js"></script>
+		<![endif]-->
+       <meta charset="utf-8">
+       <link rel="stylesheet" type="text/css" href="../static/css/demo.css" />
+
+<!--必要样式-->
+<link rel="stylesheet" type="text/css" href="../static/css/component.css" />
+   </head>
+   <body style="height: 100%; margin: 0" class="bg-cyan">
+   <div class="container" style="height: 10%">
+    <nav class="cl-effect-10">
+        <a href="/Insert/" data-hover="录入"><span>录入</span></a>
+        <a href="/select_delate_fix/" data-hover="查询"><span>查询</span></a>
+        <a href="/pie/" data-hover="占比分析"><span>占比分析</span></a>
+        <a href="/line/" data-hover="案件趋势分析"><span>案件趋势分析</span></a>
+        <a href="/histogram/" data-hover="各季节侦破数量分析"><span>各季节侦破数量分析</span></a>
+        <a href="/china/" data-hover="地区差异性分析"><span>地区差异性分析</span></a>
+    </nav>
+</div><!-- /container -->
+       <div id="container" style="height: 90%"></div>
+       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/echarts.min.js"></script>
+       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts-gl/echarts-gl.min.js"></script>
+       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts-stat/ecStat.min.js"></script>
+       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/extension/dataTool.min.js"></script>
+       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/china.js"></script>
+       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/world.js"></script>
+       <script type="text/javascript" src="https://api.map.baidu.com/api?v=2.0&ak=xfhhaTThl11qYVrqLZii6w8qE5ggnhrY&__ec_v__=20190126"></script>
+       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/extension/bmap.min.js"></script>
+       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/simplex.js"></script>
+       <script type="text/javascript">
+var dom = document.getElementById("container");
+var myChart = echarts.init(dom);
+var app = {};
+option = null;
+option = {
+    title: {
+        text: '折线图堆叠'
+    },
+    tooltip: {
+        trigger: 'axis'
+    },
+    legend: {
+        data:['民事案件','刑事案件','行政案件','特殊案件']
+    },
+    grid: {
+        left: '3%',
+        right: '4%',
+        bottom: '3%',
+        containLabel: true
+    },
+    toolbox: {
+        feature: {
+            saveAsImage: {}
+        }
+    },
+    xAxis: {
+        type: 'category',
+        boundaryGap: false,
+        data: ['1','2','3','4','5','6','7','8','9','10','11','12']
+    },
+    yAxis: {
+        type: 'value'
+    },
+    series: [
+        {
+            name:'民事案件',
+            type:'line',
+            stack: '总量',
+            data:{{ data.0 }}
+        },
+        {
+            name:'刑事案件',
+            type:'line',
+            stack: '总量',
+            data:{{ data.1 }}
+        },
+        {
+            name:'行政案件',
+            type:'line',
+            stack: '总量',
+            data:{{ data.2 }}
+        },
+        {
+            name:'特殊案件',
+            type:'line',
+            stack: '总量',
+            data:{{ data.3 }}
+        }
+
+    ]
+};
+;
+if (option && typeof option === "object") {
+    myChart.setOption(option, true);
+}
+       </script>
+   </body>
+</html>

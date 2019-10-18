@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>案件检索分析系统</title>
+
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+		<link rel="stylesheet" href="../static/css1/demo.css">
+		<link rel="stylesheet" href="../static/css1/sky-forms.css">
+		<!--[if lt IE 9]>
+			<link rel="stylesheet" href="css/sky-forms-ie8.css">
+			<link rel="stylesheet" type="text/css" href="../static/css/demo.css" />
+<!--必要样式-->
+<link rel="stylesheet" type="text/css" href="../static/css/component.css" />
+		<![endif]-->
+		<script src="../static/js1/jquery-1.9.1.min.js"></script>
+		<script src="../static/js1/jquery.validate.min.js"></script>
+		<!--[if lt IE 10]>
+			<script src="js/jquery.placeholder.min.js"></script>
+		<![endif]-->
+		<!--[if lt IE 9]>
+			<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+			<script src="js/sky-forms-ie8.js"></script>
+		<![endif]-->
+	</head>
+
+	<body class="bg-cyan">
+		<div class="body body-s">
+			<form method="post" action="/login_action/" id="sky-form" class="sky-form">
+				<header>案件检索分析系统</header>
+
+				<fieldset>
+					<section>
+						<label class="input">
+							<i class="icon-append icon-user"></i>
+							<input type="text" name="username" placeholder="username">
+							<b class="tooltip tooltip-bottom-right">请输入超级管理员提供的用户名！</b>
+						</label>
+					</section>
+
+					<section>
+						<label class="input">
+							<i class="icon-append icon-envelope-alt"></i>
+							<input type="password" name="password" placeholder="password">
+							<b class="tooltip tooltip-bottom-right">请输入超级管理员提供的密码！</b>
+						</label>
+					</section>
+				</fieldset>
+
+
+				<footer>
+					<button type="submit" class="button">登录</button>
+				</footer>
+			</form>
+		</div>
+
+		<script type="text/javascript">
+			$(function()
+			{
+				// Validation
+				$("#sky-form").validate(
+				{
+					// Rules for form validation
+					rules:
+					{
+						username:
+						{
+							required: true
+						},
+						email:
+						{
+							required: true,
+							email: true
+						},
+						password:
+						{
+							required: true,
+							minlength: 3,
+							maxlength: 20
+						},
+						passwordConfirm:
+						{
+							required: true,
+							minlength: 3,
+							maxlength: 20,
+							equalTo: '#password'
+						},
+						firstname:
+						{
+							required: true
+						},
+						lastname:
+						{
+							required: true
+						},
+						gender:
+						{
+							required: true
+						},
+						terms:
+						{
+							required: true
+						}
+					},
+
+					// Messages for form validation
+					messages:
+					{
+						login:
+						{
+							required: 'Please enter your login'
+						},
+						email:
+						{
+							required: 'Please enter your email address',
+							email: 'Please enter a VALID email address'
+						},
+						password:
+						{
+							required: 'Please enter your password'
+						},
+						passwordConfirm:
+						{
+							required: 'Please enter your password one more time',
+							equalTo: 'Please enter the same password as above'
+						},
+						firstname:
+						{
+							required: 'Please select your first name'
+						},
+						lastname:
+						{
+							required: 'Please select your last name'
+						},
+						gender:
+						{
+							required: 'Please select your gender'
+						},
+						terms:
+						{
+							required: 'You must agree with Terms and Conditions'
+						}
+					},
+
+					// Do not change code below
+					errorPlacement: function(error, element)
+					{
+						error.insertAfter(element.parent());
+					}
+				});
+			});
+		</script>
+
+	</body>
+</html>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+		<link rel="stylesheet" href="../static/css1/demo.css">
+		<link rel="stylesheet" href="../static/css1/sky-forms.css">
+		<!--[if lt IE 9]>
+			<link rel="stylesheet" href="css/sky-forms-ie8.css">
+			<link rel="stylesheet" type="text/css" href="../static/css/demo.css" />
+        <!--必要样式-->
+        <link rel="stylesheet" type="text/css" href="../static/css/component.css" />
+		<![endif]-->
+		<script src="../static/js1/jquery-1.9.1.min.js"></script>
+		<script src="../static/js1/jquery.validate.min.js"></script>
+		<!--[if lt IE 10]>
+			<script src="js/jquery.placeholder.min.js"></script>
+		<![endif]-->
+		<!--[if lt IE 9]>
+			<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+			<script src="js/sky-forms-ie8.js"></script>
+		<![endif]-->
+    <meta charset="UTF-8">
+    <title>个人案底</title>
+</head>
+<body class="bg-cyan">
+
+
+
+
+<div class="container" style="margin: 80px 0 0 70px">
+<h1>{{ data.name }}的个人案件记录</h1>
+<table border="1" width="1100" data-file-height="200" cellspacing="0" style="margin-top: 0">
+    <tr style="text-align: center;font-size: 30px">
+        <td colspan="4">姓名：{{ data.name }}</td>
+        <td colspan="4">案件总数：{{ data.number }}</td>
+    </tr>
+    <tr bgcolor="black" style="color: white">
+        <td>案件编号</td>
+        <td>案件类型</td>
+        <td>案件名称</td>
+        <td>发生地点（省）</td>
+        <td>发生地点（市）</td>
+        <td>季节</td>
+        <td>发生时间（市）</td>
+        <td>是否侦破</td>
+    </tr>
+    {% for i in data.list %}
+    <tr>
+        <td>{{ i.no }}</td>
+        <td>{{ i.type_key }}</td>
+        <td>{{ i.type_value }}</td>
+        <td>{{ i.area_key }}</td>
+        <td>{{ i.area_value }}</td>
+        <td>{{ i.season }}</td>
+        <td>{{ i.date }}</td>
+        <td>{{ i.make }}</td>
+
+    </tr>
+    {% endfor %}
+</table>
+</div>
+
+<a href="/select_delate_fix/"><button style="position: relative;display: block;float: right;
+                        height: 39px;
+                        overflow: hidden;
+                        margin: 10px 70px 0 20px;
+                        padding: 0 25px;
+                        outline: none;
+                        border: 0;
+                        font: 300 15px/39px 'Open Sans', Helvetica, Arial, sans-serif;
+                        text-decoration: none;
+                        color: #fff;
+                        cursor: pointer;background-color: black">退出</button></a>
+
+
+</body>
+</html>
